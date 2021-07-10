@@ -1,0 +1,25 @@
+version: '3'
+services:
+    mysql:
+        image: mysql:8
+        command: --default-authentication-plugin=mysql_native_password
+        container_name: biopatternsg_mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: biopatternsg2021
+        ports:
+            - 12600:3306
+        volumes:
+            - ./mysql/:/var/lib/mysql
+    mongo:
+        image: mongo:4.4.6-bionic
+        container_name: biopatternsg_mongodb
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: biopatternsg
+            MONGO_INITDB_ROOT_PASSWORD: biopatternsg2021
+        ports:
+            - 12500:27017
+        volumes:
+            - ./mongo/:/etc/mongo
+volumes:
+    mysql: {}
+    mongo: {}
