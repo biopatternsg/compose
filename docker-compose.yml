@@ -20,6 +20,25 @@ services:
             - 12500:27017
         volumes:
             - ./mongo/:/etc/mongo
+    zookeeper:
+        container_name: biopatternsg_zookeeper
+        image: zookeeper:3.7
+    kafka:
+        container_name: biopatternsg_kafka
+        image: wurstmeister/kafka:2.13-2.7.1
+        depends_on:
+            - zookeeper
+        ports:
+            - "9092:9092"
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: localhost
+            KAFKA_ADVERTISED_PORT: 9092
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            ZK_SERVER: zookeeper:2181
+            ADVERTISED_HOST: localhost
+            CONSUMER_THREADS: 5
+            BROKER_ID: 1
+            ADVERTISED_PORT: 9092
 volumes:
     mysql: {}
     mongo: {}
