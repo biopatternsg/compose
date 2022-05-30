@@ -9,7 +9,7 @@ services:
         ports:
             - 12600:3306
         volumes:
-            - ./mysql/:/var/lib/mysql
+            - ./mysql_8/:/var/lib/mysql
     mongo:
         image: mongo:4.4.6-bionic
         container_name: biopatternsg_mongodb
@@ -19,7 +19,7 @@ services:
         ports:
             - 12500:27017
         volumes:
-            - ./mongo/:/etc/mongo
+            - ./mongo_4_4/:/etc/mongo
     zookeeper:
         container_name: biopatternsg_zookeeper
         image: zookeeper:3.7
@@ -39,6 +39,12 @@ services:
             CONSUMER_THREADS: 5
             BROKER_ID: 1
             ADVERTISED_PORT: 9092
+    eureka-server:
+        container_name: eureka_server
+        build: ./eureka-server
+        command: java -jar /eureka-server.jar
+        ports:
+            - "8761:8761"
 volumes:
-    mysql: {}
-    mongo: {}
+    mysql_8: {}
+    mongo_4_4: {}
